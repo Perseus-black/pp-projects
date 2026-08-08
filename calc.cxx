@@ -2,7 +2,7 @@
 using namespace std;
 int main() {
     double f_num, s_num;
-    char op;
+    char op;                     //Git Modified
     
     cout << "Enter a digit: ";
     cin >> f_num;
