@@ -1,7 +1,4 @@
-# pp-projects
-C++ practice programs and small projects for personal practice.
-
-## First-person room inspection
+# First-person room inspection
 
 `room_inspection.cpp` is a standalone C++ terminal simulation. It uses a
 simple ray-caster to render a first-person view of a room and lets you inspect
