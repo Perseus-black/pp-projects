@@ -1,8 +1,8 @@
 #include <iostream>
-#include <windows.h>
+#include <string>
+#include <thread>
+#include <chrono>
 using namespace std;
-
-
 class OS {
     private:
     string os_model;
@@ -143,7 +143,7 @@ class Int_Wiz : public OS, public Windows {
         }
 
         cout << "\nFormatting C Drive...\n";
-        Sleep(1200);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1200));
 
         cout << "Format Complete.\n";
 
@@ -174,7 +174,7 @@ class Int_Wiz : public OS, public Windows {
         for (int i = 0; i <= 100; i += 10) {
 
             cout << "\r" << text << " " << i << "%";
-            Sleep(360);
+            std::this_thread::sleep_for(std::chrono::milliseconds(360));
         }
 
         cout << endl;
@@ -209,26 +209,26 @@ class Int_Wiz : public OS, public Windows {
         }
 
         cout << "\nRestarting Computer...\n";
-        Sleep(3600);
+        std::this_thread::sleep_for(std::chrono::milliseconds(3600));
 
         cout << "\nStarting Windows...\n";
-        Sleep(2100);
+        std::this_thread::sleep_for(std::chrono::milliseconds(2100));
 
         progress("Getting devices ready...");
 
         cout << "\nGetting ready...\n";
-        Sleep(2100);
+        std::this_thread::sleep_for(std::chrono::milliseconds(2100));
 
         cout << "\nPreparing your PC...\n";
-        Sleep(2100);
+        std::this_thread::sleep_for(std::chrono::milliseconds(2100));
     }
 
     void finalSetup() {
 
         cout << "\nFinalizing your settings...\n";
 
-        Sleep(3600);
-        
+        std::this_thread::sleep_for(std::chrono::milliseconds(3600));
+
         cout << "\n=========";
         cout << "\n Welcome ";
         cout << "\n=========\n";
