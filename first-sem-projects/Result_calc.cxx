@@ -9,6 +9,7 @@ int main() {
     int total = 0;
     float average;
     char grade;
+    float gpa;
     
     for (int i = 0; i < subj; i++) {
         cout << "Enter marks for subject " << i +1 << " = ";
@@ -33,5 +34,24 @@ int main() {
     cout << "\nAverage Marks: " << average;
     cout << "\nGrade: " << grade;
     
+    // Calculate GPA (assuming a 4.0 scale)
+    if (average >= 90)
+        gpa = 4.0;
+    else if (average >= 85)
+        gpa = 3.5;
+    else if (average >= 80)
+        gpa = 3.0;
+    else if (average >= 75)
+        gpa = 2.5;
+    else if (average >= 70)
+        gpa = 2.0;
+    else if (average >= 65)
+        gpa = 1.5;
+    else if (average >= 60)
+        gpa = 1.0;
+    else
+        gpa = 0.0;
+    
+    cout << "\nGPA: " << gpa;
     return 0;
 }
