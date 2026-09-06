@@ -11,7 +11,7 @@ public:
     string objects;
 
     void set_cored(string cd1, string cd2, string cd3) {  //setter
-        core_dynamics = {cd1 + "," + cd2 + "," + cd3};  //getter
+        core_dynamics = {cd1 + ", " + cd2 + ", " + cd3};  //getter
     }
 
     OOPs(string m, string c, string o) {  // constructor
@@ -21,7 +21,7 @@ public:
     }
 
     void getinfo() {  // method
-    cout << "Core dynamics: " << core_dynamics << endl;
+        cout << "Core dynamics: " << core_dynamics << endl;
         cout << "Here are methods: " << methods << endl;
         cout << "Here are constructors: " << constructors << endl;
         cout << "Here are objects: " << objects << endl;
@@ -31,7 +31,7 @@ public:
 int main() {  //main function
     OOPs obj_1("method1", "constructor1", "object1");  //object
     
-        obj_1.set_cored("Inheritance","Polymorphism","Encapsulation");
+    obj_1.set_cored("Inheritance","Polymorphism","Encapsulation");
     obj_1.getinfo();  //function call
 
     return 0;

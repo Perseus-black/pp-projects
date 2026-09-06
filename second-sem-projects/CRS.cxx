@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <chrono>
+#include <thread>
 using namespace std;
 
 /* --- ABSTRACT CLASS --- */
@@ -124,10 +126,13 @@ public:
         cout << "\n===== BILL =====\n";
 
         showInfo();
-
+        
+        cout << "\nPlease wait, your bill is being processed...\n";
+        std::this_thread::sleep_for(std::chrono::seconds(3));
         cout << "Car: " << selectedCar << endl;
         cout << "Days: " << days << endl;
         cout << "Total Bill: $" << totalBill << endl;
+        
     }
 
 /* --- SAVE --- */

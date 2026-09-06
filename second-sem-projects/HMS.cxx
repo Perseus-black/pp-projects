@@ -189,7 +189,7 @@ int main() {
     );
 
 // Polymorphism
-    Person* personPtr;
+    Person* personPtr;  //using pointers
 
     personPtr = &p1;
     personPtr->display();

@@ -1,18 +1,18 @@
-#include<iostream>
+#include <iostream>
+#include <string>
 using namespace std;
 
 class BMW {
     public:
     string name;
-    int R_year;
+    int r_year;
     string model;
     
-    void C_data() {
-        name = "BMW M5";
+    void C_data(string name, int r_year, string model) {
+        name = "BMW X5", r_year = 2021, model = "X4";
+
         cout << "Car is: " << name << endl;
-        R_year = 2023;
-        cout << "Released in: " << R_year << endl;
-        model = "BMW M5 CS";
+        cout << "Released in: " << r_year << endl;
         cout << "Model is: " << model << endl;
      }
 };
@@ -21,22 +21,21 @@ class BMW_ex : public BMW {
     public:
     string feature;
     
-    void C_data2() {
-        name = "BMW M3";
+    void C_data(string name, int r_year, string model, string feature) {
+        BMW::C_data(name, r_year, model);
+
+        cout << endl;
         cout << "Car is: " << name << endl;
-        R_year = 2017;
-        cout << "Released in: " << R_year << endl;
-        model = "BMW M3 CS";
+        cout << "Released in: " << r_year << endl;
         cout << "Model is: " << model << endl;
-        feature = "Twin Turbo";
-        cout << "It's feature is: " << feature << endl;
+        cout << "Feature: " << feature << endl;
     }
 };
 
 int main() {
-    BMW_ex Call_d;
+    BMW_ex ex;
     
-    Call_d.C_data();
-    Call_d.C_data2();
+    ex.C_data("BMW X5", 2023, "X5", "Sunroof");
+
     return 0;
 }
