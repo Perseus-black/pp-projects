@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+using namespace std;
 
 int main() {
     int wNum = 1999;
@@ -8,16 +9,16 @@ int main() {
     float fNum = 3.79f;
     char sChar = 'Z';                   //this is changeable to any character
     const char sChar2 = 'A';            //this is not changeable to any character
-    std::string strs = "string declared.";
+    string strs = "string declared.";
     bool bVal = true;   //can also be false
 
-    std::cout << "I am here." << "\t" << std::endl; //ignoring namespace
-    std::cout << "I already know this.\n";
-    std::cout << "But I am here \"anyway\".\n";
+    cout << "I am here." << "\t" << endl; //ignoring namespace
+    cout << "I already know this.\n";
+    cout << "But I am here \"anyway\".\n";
 
-    std::cout << wNum * dNum / fNum << "\n";
-    std::cout << "Alphabets end with the character: " << sChar << "\n";
-    std::cout << "String stores many characters such as: " << strs << "\n";
+    cout << wNum * dNum / fNum << "\n";
+    cout << "Alphabets end with the character: " << sChar << "\n";
+    cout << "String stores many characters such as: " << strs << "\n";
 
     /*
     The general rules for naming variables are:
@@ -31,6 +32,6 @@ int main() {
 
     //const is used for universal nouns or numbers.
     //const is always declared at intialization.
-
+    
     return 0;
 }
