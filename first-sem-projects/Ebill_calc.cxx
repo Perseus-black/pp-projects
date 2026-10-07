@@ -12,8 +12,10 @@ int main() {
         // Input consumer details
         cout << "Enter Consumer Name: ";
         cin >> consumerName;
+
         cout << "Enter Consumer ID: ";
         cin >> consumerID;
+
         cout << "Enter Units Consumed: ";
         cin >> units;
 
@@ -23,11 +25,11 @@ int main() {
         if (units <= 100)
             bill = units * 5;          // Slab 1: 0-100 units @5/unit
         else if (units <= 200)
-            bill = 100 * 5 + (units - 100) * 7; // Slab 2: 101-200 units @7/unit
+            bill = 100 * 5 + (units - 100) * 7;      // Slab 2: 101-200 units @7/unit
         else if (units <= 500)
-            bill = 100 * 5 + 100 * 7 + (units - 200) * 10; // Slab 3: 201-500 units @10/unit
+            bill = 100 * 5 + 100 * 7 + (units - 200) * 10;       // Slab 3: 201-500 units @10/unit
         else
-            bill = 100 * 5 + 100 * 7 + 300 * 10 + (units - 500) * 15; // Slab 4: >500 units @15/unit
+            bill = 100 * 5 + 100 * 7 + 300 * 10 + (units - 500) * 15;       // Slab 4: >500 units @15/unit
 
         // Display bill summary
         cout << fixed << setprecision(2);

@@ -10,9 +10,9 @@ int main() {
     char sChar = 'Z';                   //this is changeable to any character
     const char sChar2 = 'A';            //this is not changeable to any character
     string strs = "string declared.";
-    bool bVal = true;   //can also be false
+    bool bVal = true;                   //can also be false
 
-    cout << "I am here." << "\t" << endl; //ignoring namespace
+    cout << "I am here." << "\t" << endl;        //ignoring namespace
     cout << "I already know this.\n";
     cout << "But I am here \"anyway\".\n";
 

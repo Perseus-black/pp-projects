@@ -10,15 +10,19 @@ int main() {
 
     cout << "Enter your age: ";
     cin >> age;
+
     cout << "Are you a citizen of Pakistan? (yes/no): ";
     string temp;
     cin >> temp;
+
     nationality = (temp == "yes");
     cout << "Are you a Muslim? (yes/no): ";
     cin >> temp;
+
     religion = (temp == "yes");
     cout << "Do you have a domicile of Pakistan? (yes/no): ";
     cin >> temp;
+    
     domicile = (temp == "yes");
 
     if (age >= 18 && nationality == true || religion == true && domicile == true) {

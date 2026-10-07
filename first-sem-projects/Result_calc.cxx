@@ -19,39 +19,52 @@ int main() {
     
     average = total / double(subj);
     
-    if (average >= 90)
-    grade = 'A';
-    else if (average >= 80)
-    grade = 'B';
-    else if (average >= 70)
-    grade = 'C';
-    else if (average >= 60)
-    grade = 'D';
-    else
-    grade = 'F';
-    
+    if (average >= 90) {
+        grade = 'A';
+    }
+    else if (average >= 80) {
+        grade = 'B';
+    }
+    else if (average >= 70) {
+        grade = 'C';
+    }
+    else if (average >= 60) {
+        grade = 'D';
+    }
+    else {
+        grade = 'F';
+    }
+
     cout << "\nTotal Marks: " << total;
     cout << "\nAverage Marks: " << average;
     cout << "\nGrade: " << grade;
     
     // Calculate GPA (assuming a 4.0 scale)
-    if (average >= 90)
+    if (average >= 90) {
         gpa = 4.0;
-    else if (average >= 85)
+    }
+    else if (average >= 85) {
         gpa = 3.5;
-    else if (average >= 80)
+    }
+    else if (average >= 80) {
         gpa = 3.0;
-    else if (average >= 75)
+    }
+    else if (average >= 75) {
         gpa = 2.5;
-    else if (average >= 70)
+    }
+    else if (average >= 70) {
         gpa = 2.0;
-    else if (average >= 65)
+    }
+    else if (average >= 65) {
         gpa = 1.5;
-    else if (average >= 60)
+    }
+    else if (average >= 60) {
         gpa = 1.0;
-    else
+    }
+    else {
         gpa = 0.0;
-    
+    }
+
     cout << "\nGPA: " << gpa;
     return 0;
 }
