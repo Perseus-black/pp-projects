@@ -181,16 +181,16 @@ int main() {
         "########################",
     };
     const std::vector<Inspectable> objects {   //Objects in room
-        {{5.5f, 3.5f}, 'D', "Desk",
-         "A wooden desk. A notebook is open beside a switched-off lamp."},
+        {{5.5f, 3.5f}, 'D', "Duster",
+         "Duster. A blue and white duster."},
         {{16.5f, 3.5f}, 'W', "Window",
-         "A closed window. Rain marks the glass and the latch is secure."},
-        {{10.5f, 7.5f}, 'C', "Chair",
-         "A fabric chair, slightly worn but stable. Nothing is hidden beneath it."},
-        {{14.5f, 10.5f}, 'B', "Bookcase",
-         "A bookcase holding maintenance manuals and a small first-aid kit."},
-        {{7.5f, 11.5f}, 'P', "Painting",
-         "A painting of a landscape. The frame is slightly crooked."},
+         "A closed window. Railing behind it and the latch is secure."},
+        {{10.5f, 7.5f}, 'C', "Fan",
+         "A fan is installed on the ceiling. It is not spinning."},
+        {{14.5f, 10.5f}, 'B', "Phone",
+         "Qari is holding a phone. It is a black smartphone with a decent screen."},
+        {{7.5f, 11.5f}, 'P', "Khatoon",
+         "Multiple khatoon talking to each other. They are wearing traditional attire."},
     };
 
     Vec2 player{2.5f, 9.5f};   //Rendering view for player during inspection
