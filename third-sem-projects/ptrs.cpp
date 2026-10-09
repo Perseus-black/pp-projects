@@ -1,6 +1,4 @@
 #include <iostream>
-
-
 struct Object {
     int objs;
     Object* value;
