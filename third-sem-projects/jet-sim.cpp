@@ -3,11 +3,13 @@
 #include <cmath>
 #include <cstdint>
 #include <deque>
+#include <filesystem>
 #include <iomanip>
 #include <iostream>
 #include <optional>
 #include <sstream>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 // ============================================================
@@ -108,6 +110,29 @@ std::string number(
            << value;
 
     return stream.str();
+}
+
+std::filesystem::path resolveAssetPath(
+    const std::filesystem::path& relativePath,
+    const std::vector<std::filesystem::path>& fallbackDirs
+) {
+    std::filesystem::path current =
+        std::filesystem::current_path();
+
+    for (const auto& dir : fallbackDirs) {
+        const std::filesystem::path candidate =
+            dir / relativePath;
+
+        if (std::filesystem::exists(candidate)) {
+            return candidate;
+        }
+    }
+
+    if (std::filesystem::exists(current / relativePath)) {
+        return current / relativePath;
+    }
+
+    return relativePath;
 }
 
 // ============================================================
@@ -715,7 +740,7 @@ void drawBankIndicator(
 // MAIN
 // ============================================================
 
-int main() {
+int main(int argc, char* argv[]) {
     sf::RenderWindow window(
         sf::VideoMode({
             WINDOW_WIDTH,
@@ -726,16 +751,34 @@ int main() {
 
     window.setFramerateLimit(60);
 
+    const std::filesystem::path executableDir =
+        argc > 0 && argv[0] != nullptr
+            ? std::filesystem::absolute(
+                std::filesystem::path(argv[0])
+              ).parent_path()
+            : std::filesystem::current_path();
+
+    const std::vector<std::filesystem::path> assetDirs = {
+        executableDir,
+        std::filesystem::current_path(),
+        executableDir / "assets",
+        std::filesystem::current_path() / "assets",
+        "/usr/share/fonts/truetype/dejavu"
+    };
+
     // --------------------------------------------------------
     // LOAD YOUR OWN F-22 PNG
     // --------------------------------------------------------
 
     sf::Texture jetTexture;
 
-    if (!jetTexture.loadFromFile("f22.png")) {
+    const std::filesystem::path jetTexturePath =
+        resolveAssetPath("f22.png", assetDirs);
+
+    if (!jetTexture.loadFromFile(jetTexturePath.string())) {
         std::cerr
-            << "Error: Could not load f22.png.\n"
-            << "Place f22.png in the program's working directory.\n";
+            << "Error: Could not load "
+            << jetTexturePath.string() << ".\n";
 
         return 1;
     }
@@ -764,11 +807,16 @@ int main() {
 
     sf::Font font;
 
-    if (!font.openFromFile(
-        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-    )) {
+    const std::filesystem::path fontPath =
+        resolveAssetPath(
+            "DejaVuSans.ttf",
+            assetDirs
+        );
+
+    if (!font.openFromFile(fontPath.string())) {
         std::cerr
-            << "Error: Could not load DejaVuSans.ttf.\n";
+            << "Error: Could not load "
+            << fontPath.string() << ".\n";
 
         return 1;
     }
@@ -829,6 +877,9 @@ int main() {
     bool radarVisible = true;
     bool autoNavigation = true;
 
+    std::unordered_set<sf::Keyboard::Key>
+        pressedActionKeys;
+
     std::optional<sf::Vector2f> waypoint;
 
     // -1 means no selected contact.
@@ -863,43 +914,51 @@ int main() {
                 }
 
                 if (key->code == sf::Keyboard::Key::R) {
-                    radarVisible = !radarVisible;
+                    if (pressedActionKeys.insert(key->code).second) {
+                        radarVisible = !radarVisible;
 
-                    addLog(
-                        eventLog,
-                        radarVisible
-                            ? "RADAR SEARCH ENABLED"
-                            : "RADAR SEARCH DISABLED"
-                    );
+                        addLog(
+                            eventLog,
+                            radarVisible
+                                ? "RADAR SEARCH ENABLED"
+                                : "RADAR SEARCH DISABLED"
+                        );
+                    }
                 }
 
                 if (key->code == sf::Keyboard::Key::A) {
-                    autoNavigation = !autoNavigation;
+                    if (pressedActionKeys.insert(key->code).second) {
+                        autoNavigation = !autoNavigation;
 
-                    addLog(
-                        eventLog,
-                        autoNavigation
-                            ? "AUTO NAVIGATION ENABLED"
-                            : "AUTO NAVIGATION DISABLED"
-                    );
+                        addLog(
+                            eventLog,
+                            autoNavigation
+                                ? "AUTO NAVIGATION ENABLED"
+                                : "AUTO NAVIGATION DISABLED"
+                        );
+                    }
                 }
 
                 if (key->code == sf::Keyboard::Key::C) {
-                    waypoint.reset();
+                    if (pressedActionKeys.insert(key->code).second) {
+                        waypoint.reset();
 
-                    addLog(
-                        eventLog,
-                        "WAYPOINT CLEARED"
-                    );
+                        addLog(
+                            eventLog,
+                            "WAYPOINT CLEARED"
+                        );
+                    }
                 }
 
                 if (key->code == sf::Keyboard::Key::Home) {
-                    player.targetSpeed = 180.f;
+                    if (pressedActionKeys.insert(key->code).second) {
+                        player.targetSpeed = 180.f;
 
-                    addLog(
-                        eventLog,
-                        "CRUISE SPEED SELECTED"
-                    );
+                        addLog(
+                            eventLog,
+                            "CRUISE SPEED SELECTED"
+                        );
+                    }
                 }
             }
 
@@ -915,6 +974,7 @@ int main() {
                         window.mapPixelToCoords(mouse->position);
 
                     int clickedContact = -1;
+                    float closestContactDistance = 17.f;
 
                     for (
                         std::size_t i = 0;
@@ -925,17 +985,24 @@ int main() {
                             simulationTime -
                             contacts[i].lastRadarHit <= TRACK_MEMORY;
 
+                        if (!detected)
+                            continue;
+
+                        const float clickDistance = distanceBetween(
+                            click,
+                            contacts[i].position
+                        );
+
                         if (
-                            detected &&
-                            distanceBetween(
-                                click,
-                                contacts[i].position
-                            ) <= 17.f
+                            clickDistance <= 17.f &&
+                            (
+                                clickedContact < 0 ||
+                                clickDistance < closestContactDistance
+                            )
                         ) {
+                            closestContactDistance = clickDistance;
                             clickedContact =
                                 static_cast<int>(i);
-
-                            break;
                         }
                     }
 
@@ -963,6 +1030,15 @@ int main() {
                         );
                     }
                 }
+            }
+        }
+
+        for (auto it = pressedActionKeys.begin();
+             it != pressedActionKeys.end();) {
+            if (!sf::Keyboard::isKeyPressed(*it)) {
+                it = pressedActionKeys.erase(it);
+            } else {
+                ++it;
             }
         }
 
@@ -995,7 +1071,11 @@ int main() {
         // Manual steering disables autopilot so the two systems
         // do not fight over the aircraft heading.
         if (leftPressed || rightPressed) {
-            if (autoNavigation) {
+            const float turnInput =
+                (rightPressed ? 1.f : 0.f) -
+                (leftPressed ? 1.f : 0.f);
+
+            if (turnInput != 0.f && autoNavigation) {
                 autoNavigation = false;
 
                 addLog(
@@ -1003,10 +1083,6 @@ int main() {
                     "MANUAL TURN: AUTOPILOT DISENGAGED"
                 );
             }
-
-            const float turnInput =
-                (rightPressed ? 1.f : 0.f) -
-                (leftPressed ? 1.f : 0.f);
 
             commandedTurnRate = turnInput * 75.f;
 
@@ -1552,7 +1628,7 @@ int main() {
                 number(player.speed) +
                 " / " +
                 number(player.targetSpeed) +
-                " kt*",
+                " kt (SIM)",
             12,
             {22.f, 68.f}
         );
@@ -1562,7 +1638,7 @@ int main() {
             font,
             "ALT  " +
                 number(player.altitude) +
-                " ft*",
+                " ft (SIM)",
             13,
             {22.f, 90.f}
         );
@@ -1777,7 +1853,7 @@ int main() {
                 font,
                 "ALT    " +
                     number(contact.altitude) +
-                    " ft*",
+                    " ft (SIM)",
                 12,
                 {
                     WINDOW_WIDTH - 252.f,
@@ -1788,7 +1864,15 @@ int main() {
             drawText(
                 window,
                 font,
-                trackFresh ? "LIVE" : "STALE",
+                trackFresh
+                    ? "LIVE " +
+                        number(
+                            simulationTime -
+                                contact.lastRadarHit,
+                            1
+                        ) +
+                        "s"
+                    : "STALE",
                 10,
                 {
                     WINDOW_WIDTH - 65.f,
@@ -1813,7 +1897,7 @@ int main() {
             drawText(
                 window,
                 font,
-                "Click a detected symbol",
+                "Click track to inspect it,",
                 12,
                 {
                     WINDOW_WIDTH - 252.f,
@@ -1824,7 +1908,7 @@ int main() {
             drawText(
                 window,
                 font,
-                "to inspect its track.",
+                "or map to set a waypoint.",
                 12,
                 {
                     WINDOW_WIDTH - 252.f,
@@ -1947,10 +2031,10 @@ int main() {
                 window,
                 font,
                 eventLog[i],
-                11,
+                10,
                 {
                     130.f,
-                    706.f + static_cast<float>(i) * 16.f
+                    706.f + static_cast<float>(i) * 13.f
                 },
                 i == 0
                     ? sf::Color(225, 235, 235)
@@ -1961,22 +2045,10 @@ int main() {
         drawText(
             window,
             font,
-            "Arrows: steer/speed | A: autopilot | R: radar | "
-            "C: clear WP | Home: cruise | L-click: waypoint/contact | Esc: exit",
+            "Left/Right: steer | Up/Down: speed | A: autopilot | "
+            "R: radar | C: clear WP | Home: cruise | Click: track/waypoint | Esc: quit",
             9,
             {12.f, 792.f},
-            sf::Color(105, 135, 140)
-        );
-
-        drawText(
-            window,
-            font,
-            "*Training values; not real-world measurements",
-            9,
-            {
-                WINDOW_WIDTH - 250.f,
-                778.f
-            },
             sf::Color(105, 135, 140)
         );
 

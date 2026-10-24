@@ -9,7 +9,7 @@ int main() {
         std::cout << "myshell> ";
         getline(std::cin, cmd);
 
-        if (cmd == "exit")
+        if (cmd == "exit" || "quit")
             break;
 
         system(cmd.c_str());

@@ -1,32 +1,40 @@
 #include<iostream>
-using namespace std;
+#include<cmath>
 
 int main() {
     float marks;
+    float percentage;
+    float t_marks {100.0};
     
-    cout << "Enter your marks: ";
-    cin >> marks;
+    std::cout << "Enter your marks: ";
+    std::cin >> marks;
 
-    if (marks >= 90)
+    percentage = marks * 100.0 / t_marks; 
+
+    if (marks >= 90.0)
     {
-        cout << "Grade: A" << endl;
+        std::cout << "Grade: A+\t" << percentage << "%\n";
     }
-    else if (marks >= 80)
+    else if (marks >= 80.0)
     {
-        cout << "Grade: B" << endl;
+        std::cout << "Grade: A\t" << percentage << "%\n";
     }
-    else if (marks >= 70)
+    else if (marks >= 70.0)
     {
-        cout << "Grade: C" << endl;
+        std::cout << "Grade: B\t" << percentage << "%\n";
     }
-    else if (marks >= 60)
+    else if (marks >= 60.0)
     {
-        cout << "Grade: D" << endl;
+        std::cout << "Grade: C\t" << percentage << "%\n";
+    }
+    else if (marks >= 50.0)
+    {
+        std::cout << "Grade: D\t" << percentage << "%\n";
     }
     else
     {
-        cout << "Grade: F" << endl;
+        std::cout << "Grade: F\n";
+        std::cout << "Your percentage is below 50.";
     }
-
     return 0;
 }

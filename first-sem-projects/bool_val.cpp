@@ -1,6 +1,5 @@
 #include<iostream>
 #include<string>
-using namespace std;
 
 int main() {
     int age;
@@ -8,27 +7,27 @@ int main() {
     bool religion;
     bool domicile;
 
-    cout << "Enter your age: ";
-    cin >> age;
+    std::cout << "Enter your age: ";
+    std::cin >> age;
 
-    cout << "Are you a citizen of Pakistan? (yes/no): ";
-    string temp;
-    cin >> temp;
+    std::cout << "Are you a citizen of Pakistan? (yes/no): ";
+    std::string temp;
+    std::cin >> temp;
 
     nationality = (temp == "yes");
-    cout << "Are you a Muslim? (yes/no): ";
-    cin >> temp;
+    std::cout << "Are you a Muslim? (yes/no): ";
+    std::cin >> temp;
 
     religion = (temp == "yes");
-    cout << "Do you have a domicile of Pakistan? (yes/no): ";
-    cin >> temp;
+    std::cout << "Do you have a domicile of Pakistan? (yes/no): ";
+    std::cin >> temp;
     
     domicile = (temp == "yes");
 
     if (age >= 18 && nationality == true || religion == true && domicile == true) {
-        cout << "You are eligible to vote in Pakistan." << endl;
+        std::cout << "You are eligible to vote in Pakistan.\n";
     } else {
-        cout << "You are not eligible to vote in Pakistan." << endl;
+        std::cout << "You are not eligible to vote in Pakistan.\n";
     }
 
     return 0;

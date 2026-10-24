@@ -1,21 +1,22 @@
 #include<iostream>
-using namespace std;
+#include<cmath>
 
 int main() {
-    int num;
+    float num;
 
-    cout << "Enter a number: ";
-    cin >> num;
-    cout << "Multiplication Table of " << num << " is: " << endl; 
+    std::cout << "Enter a number: ";
+    std::cin >> num;
+
+    std::cout << "Multiplication Table of " << num << " is: \n"; 
 
     for(int i = 1; i <= 10; ++i) {   // Display multiplication table of the given number
-        cout << num << " * " << i << " = " << num * i << endl;
+        std::cout << num << " * " << i << " = " << num * i << std::endl;
     }
     
-    cout << "\n";
+    std::cout << "\n";
 
-    for(int i = 10; i >=0; --i) {   // Display reverse multiplication table of the given number
-        cout << num << " * " << i << " = " << num * i << endl;
+    for(int i = 10; i >= 0; --i) {   // Display reverse multiplication table of the given number
+        std::cout << num << " * " << i << " = " << num * i << std::endl;
     }
     return 0;
 }

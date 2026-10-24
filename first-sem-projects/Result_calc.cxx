@@ -1,43 +1,47 @@
 #include<iostream>
-using namespace std;
+#include<cmath>
+
 int main() {
     int subj;
-    cout << "Enter total number of subjects: ";
-    cin >> subj;
+
+    std::cout << "Enter total number of subjects: ";
+    std::cin >> subj;
     
-    int marks[subj];
-    int total = 0;
+    float marks[subj];
+    double total {0};
     float average;
     char grade;
     float gpa;
     
     for (int i = 0; i < subj; i++) {
-        cout << "Enter marks for subject " << i +1 << " = ";
-        cin >> marks[i];
+        std::cout << "Enter marks for subject " << i + 1 << " = ";
+        std::cin >> marks[i];
+
         total += marks[i];
     }
     
     average = total / double(subj);
     
     if (average >= 90) {
-        grade = 'A';
+        grade = 'A+';
     }
     else if (average >= 80) {
-        grade = 'B';
+        grade = 'A';
     }
     else if (average >= 70) {
-        grade = 'C';
+        grade = 'B';
     }
     else if (average >= 60) {
+        grade = 'C';
+    }
+    else if (average >= 50) {
         grade = 'D';
     }
     else {
         grade = 'F';
     }
 
-    cout << "\nTotal Marks: " << total;
-    cout << "\nAverage Marks: " << average;
-    cout << "\nGrade: " << grade;
+    std::cout << "\nTotal Marks: " << total << "\nAverage Marks: " << average << "\nGrade: " << grade << std::endl;
     
     // Calculate GPA (assuming a 4.0 scale)
     if (average >= 90) {
@@ -65,6 +69,6 @@ int main() {
         gpa = 0.0;
     }
 
-    cout << "\nGPA: " << gpa;
+    std::cout << "\nGPA: " << gpa << std::endl;
     return 0;
 }

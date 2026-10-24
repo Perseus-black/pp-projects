@@ -1,26 +1,20 @@
 #include <iostream>
 #include <iomanip>
-using namespace std;
+#include <cmath>
 
 int main() {
-    string consumerName;
+    std::string consumerName;
     int consumerID;
     double units;
     char choice;
 
     do {
         // Input consumer details
-        cout << "Enter Consumer Name: ";
-        cin >> consumerName;
-
-        cout << "Enter Consumer ID: ";
-        cin >> consumerID;
-
-        cout << "Enter Units Consumed: ";
-        cin >> units;
+        std::cout << "Enter Consumer Name, ID & Units Consumed:\n";
+        std::cin >> consumerName >> consumerID >> units;
 
         // Calculate bill
-        double bill = 0.0;
+        double bill {0.0};
 
         if (units <= 100)
             bill = units * 5;          // Slab 1: 0-100 units @5/unit
@@ -32,19 +26,16 @@ int main() {
             bill = 100 * 5 + 100 * 7 + 300 * 10 + (units - 500) * 15;       // Slab 4: >500 units @15/unit
 
         // Display bill summary
-        cout << fixed << setprecision(2);
-        cout << "\n--- Electricity Bill Summary ---\n";
-        cout << "Consumer Name: " << consumerName << endl;
-        cout << "Consumer ID: " << consumerID << endl;
-        cout << "Units Consumed: " << units << endl;
-        cout << "Total Bill: Rs. " << bill << endl;
+        std::cout << std::fixed << std::setprecision(2);
+        std::cout << "\n--- Electricity Bill Summary ---\n";
+        std::cout << "Consumer Name: " << consumerName << "\nConsumer ID: " << consumerID << "\nUnits Consumed: " << units << "\nTotal Bill: Rs. " << bill << std::endl;
 
         // Ask if user wants to calculate for another consumer
-        cout << "\nDo you want to calculate for another consumer? (Y/N): ";
-        cin >> choice;
+        std::cout << "\nDo you want to calculate for another consumer? (Y/N):\n";
+        std::cin >> choice;
 
     } while (choice == 'Y' || choice == 'y');
 
-    cout << "\nThank you for using the Electricity Bill Calculator!\n";
+    std::cout << "\nThank you for using the Electricity Bill Calculator!\n";
     return 0;
 }
