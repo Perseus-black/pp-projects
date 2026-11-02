@@ -1,0 +1,3 @@
+/home/ghost/Git Projects/pp-projects/third-sem-projects/build/CMakeFiles/jet-sim-modern.dir
+/home/ghost/Git Projects/pp-projects/third-sem-projects/build/CMakeFiles/edit_cache.dir
+/home/ghost/Git Projects/pp-projects/third-sem-projects/build/CMakeFiles/rebuild_cache.dir
